@@ -7,7 +7,7 @@
     <title>Document</title>
     <style>
         html {
-            height: 100%;
+            height: 90%;
         }
 
         body {
@@ -18,8 +18,8 @@
             position: fixed;
             left: 50%;
             top: 0;
-            min-width: 10%;
-            min-height: 10%;
+            min-width: 100%;
+            min-height: 100%;
             width: auto;
             height: auto;
             z-index: -100;
@@ -44,20 +44,29 @@
 
 <body>
     <h1>scroll to play video</h1>
-    <video id="video"
-        src="https://res.cloudinary.com/dx8majtk1/video/upload/ac_none,c_scale,ki_0.1,q_auto,vc_h264,w_1680/v1711028378/lightshiprv-scroll-video-vimeo_ikhngx.mp4"></video>
+    <video id="video" src="https://res.cloudinary.com/dx8majtk1/video/upload/ac_none,c_scale,ki_0.1,q_auto,vc_h264,w_1680/v1711028378/lightshiprv-scroll-video-vimeo_ikhngx.mp4"></video>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
     <script>
-        function scrollVideo() {
-            var video = document.getElementById('video'),
-                videoLength = video.duration,
-                scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+        document.addEventListener('DOMContentLoaded', function () {
+            gsap.registerPlugin(ScrollTrigger);
 
-            video.currentTime = (scrollPosition / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * videoLength;
-        }
+            var video = document.getElementById('video');
 
-        window.addEventListener('scroll', function (e) {
-            scrollVideo();
+            // Ensure the video metadata is loaded
+            video.addEventListener('loadedmetadata', function () {
+                gsap.to(video, {
+                    currentTime: video.duration,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: document.body,
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: true
+                    }
+                });
+            });
         });
     </script>
 </body>
