@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 7000px;
+        }
+
+        video {
+            position: fixed;
+            left: 50%;
+            top: 0;
+            min-width: 10%;
+            min-height: 10%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            background-size: cover;
+            transform: translateX(-50%);
+        }
+
+        h1 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            z-index: 99;
+            font-family: HelveticaNeue, Helvetica, sans-serif;
+            font-size: 8vmin;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>scroll to play video</h1>
+    <video id="video"
+        src="https://res.cloudinary.com/dx8majtk1/video/upload/ac_none,c_scale,ki_0.1,q_auto,vc_h264,w_1680/v1711028378/lightshiprv-scroll-video-vimeo_ikhngx.mp4"></video>
+
+    <script>
+        function scrollVideo() {
+            var video = document.getElementById('video'),
+                videoLength = video.duration,
+                scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+
+            video.currentTime = (scrollPosition / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * videoLength;
+        }
+
+        window.addEventListener('scroll', function (e) {
+            scrollVideo();
+        });
+    </script>
+</body>
+
+</html>
